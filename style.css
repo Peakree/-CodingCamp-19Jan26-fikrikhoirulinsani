@@ -1,0 +1,176 @@
+.todo-title {
+  text-align: center;
+  position: relative;
+
+  top: -70px;
+  color: rgb(188, 202, 28);
+  font-size: 36px;
+  margin-top: 40px;
+  font-weight: 900;
+  font-family: poppins, sans-serif;
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.43);
+}
+
+.main-card {
+  background-color: #d1c3c71d;
+  width: 90%;            
+  max-width: 600px;       
+  margin: 340px auto;     
+  padding: 100px;
+  padding-bottom: 200px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.action-row {
+  display: flex;
+  justify-content: space-between; /* Menendang tombol ke ujung kiri & kanan */
+  align-items: center;
+  margin-top: 20px;
+}
+
+
+
+/* Mengatur Baris Input (Teks, Tanggal, +) */
+.input-row {
+  display: flex;         /* Membuat input sejajar menyamping */
+  width: 100%;
+  gap: 10px;
+  position: relative;     
+  top: -30px;        /* Jarak antar kotak input */
+}
+
+.input-row input[type="text"] {
+  flex: 2;               /* Membuat input teks lebih panjang */
+}
+
+/* Mengatur Tombol Filter & Delete All agar di ujung kiri dan kanan */
+.action-row {
+  display: flex;
+  width: 95%;
+  justify-content: space-between;
+}
+
+
+.table-header {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  color: #8f9bb3;
+  font-weight: bold;
+  font-size: 12px;
+  position: relative;
+  top: 50px;
+}
+
+input[type="text"], input[type="date"] {
+  background-color: #1a1f26; /* Warna lebih gelap dari background utama */
+  border: 2px solid #3e4553;  /* Stroke awal yang soft */
+  color: white;
+  padding: 12px 15px;
+  border-radius: 8px;         /* Membuat sudut membulat */
+  outline: none;
+  transition: all 0.3s ease;  /* Efek halus saat transisi warna */
+}
+
+/* Efek saat kotak input diklik (Focus) */
+input:focus {
+  border-color: #f9fd7c;     
+  box-shadow: 0 0 10px rgba(223, 202, 15, 0.4); /* Efek cahaya (glow) */
+}
+
+button {
+  border: none;
+  border-radius: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.2s active;
+}
+
+/* Tombol Plus (+) & Delete All */
+.add-btn{
+   background-color: #7c83fd;
+  color: white;
+  padding: 10px 20px;
+}
+
+.delete-btn {
+  background-color: #7c83fd;
+  color: white;
+  padding: 20px 20px;
+}
+
+/* Tombol Filter */
+.filter-btn {
+  background-color: #2d3545;
+  color: #8f9bb3;
+  padding: 20px 20px;
+  width: 100px;
+  position: relative;
+  right: -30px;
+}
+
+/* Efek saat tombol ditekan */
+button:active {
+  transform: scale(.9); /* Tombol sedikit mengecil saat diklik */
+}
+
+/* Efek Hover (Saat kursor di atas tombol) */
+button:hover {
+  filter: brightness(1.2); /* Tombol jadi sedikit lebih terang */
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px 0;
+  border-bottom: 1px solid #3e4553; /* Garis pemisah tipis */
+  color: #8f9bb3;
+  font-size: 13px;
+  letter-spacing: 1px; /* Memberi jarak antar huruf agar elegan */
+  text-transform: uppercase;
+}
+
+/* Container daftar tugas */
+.task-list {
+    margin-top: 50px;
+    width: 100%;
+}
+
+/* Styling Baris yang baru muncul */
+.task-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #3e4553;
+    color: #000000; /* Pastikan warna teks putih agar kelihatan */
+    font-size: 14px;
+}
+
+/* Mengatur Lebar Kolom agar Sejajar dengan Header */
+.col-task, .col-date, .col-status, .col-action {
+    flex: 1; /* Memberi ruang yang sama rata */
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Khusus kolom teks tugas bisa dibuat lebih lebar jika perlu */
+.col-task {
+    flex: 1.5; 
+    text-align: left; /* Biasanya nama tugas rata kiri lebih enak dilihat */
+    padding-left: 10px;
+}
+
+/* Warna tombol hapus kecil */
+.btn-delete {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
