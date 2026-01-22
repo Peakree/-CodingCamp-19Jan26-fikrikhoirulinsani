@@ -1,10 +1,12 @@
+// AMBIL ELEMEN DOM
 const inputTask = document.querySelector('.input-text');
 const inputDate = document.querySelector('.input-date');
 const addBtn = document.querySelector('.add-btn');
-const filterBtn = document.querySelector('.filter-btn'); // Ambil tombol filter
-const deleteBtn = document.querySelector('.delete-btn'); // Ambil tombol delete all
+const filterBtn = document.querySelector('.filter-btn');
+const deleteBtn = document.querySelector('.delete-btn');
 const mainCard = document.querySelector('.main-card');
 
+// CONTAINER TASK
 let taskList = document.querySelector('.task-list');
 if (!taskList) {
     taskList = document.createElement('div');
@@ -12,68 +14,107 @@ if (!taskList) {
     mainCard.appendChild(taskList);
 }
 
-// 1. FUNGSI TAMBAH TUGAS
+// DATA HISTORY
+let taskHistory = [];
+
+// ==========================
+// TAMBAH TASK
+// ==========================
 function addTask() {
-    const taskValue = inputTask.value;
+    const taskValue = inputTask.value.trim();
     const dateValue = inputDate.value;
 
-    if (taskValue.trim() === "") {
-        alert("Isi tugasnya dulu!");
+    // VALIDASI
+    if (taskValue === "" || dateValue === "") {
+        alert("Task dan tanggal wajib diisi");
         return;
     }
 
-    const row = document.createElement('div');
-    row.className = 'task-row'; 
+    // SIMPAN KE HISTORY
+    const taskData = {
+        task: taskValue,
+        dueDate: dateValue,
+        status: "Pending",
+        createdAt: new Date().toLocaleString()
+    };
+    taskHistory.push(taskData);
 
+    console.log("Data todo saat ini:");
+    console.table(taskHistory);
+
+    // BUAT ROW
+    const row = document.createElement('div');
+    row.className = 'task-row';
     row.innerHTML = `
         <span class="col-task">${taskValue}</span>
-        <span class="col-date">${dateValue || '-'}</span>
+        <span class="col-date">${dateValue}</span>
         <span class="col-status">Pending</span>
         <div class="col-action">
             <button class="btn-delete">X</button>
         </div>
     `;
-
     taskList.appendChild(row);
 
-    // Reset Input
+    // RESET INPUT
     inputTask.value = "";
     inputDate.value = "";
 
-    // Fungsi Hapus per baris
-    row.querySelector('.btn-delete').onclick = () => row.remove();
+    // HAPUS PER ITEM
+    row.querySelector('.btn-delete').onclick = () => {
+        taskHistory = taskHistory.filter(
+            item => !(item.task === taskValue && item.dueDate === dateValue)
+        );
+        row.remove();
+        console.table(taskHistory);
+    };
 
-    // Fungsi agar status bisa diklik (Pending -> Completed)
+    // TOGGLE STATUS
     const statusSpan = row.querySelector('.col-status');
     statusSpan.style.cursor = "pointer";
-    statusSpan.onclick = function() {
-        if (this.innerText === "Pending") {
-            this.innerText = "Completed";
-            this.style.color = "#00ffa2"; // Warna hijau neon
+
+    statusSpan.onclick = () => {
+        const item = taskHistory.find(
+            t => t.task === taskValue && t.dueDate === dateValue
+        );
+
+        if (statusSpan.innerText === "Pending") {
+            statusSpan.innerText = "Completed";
+            statusSpan.style.color = "#00ffa2";
+            if (item) item.status = "Completed";
         } else {
-            this.innerText = "Pending";
-            this.style.color = ""; // Kembali ke warna semula
+            statusSpan.innerText = "Pending";
+            statusSpan.style.color = "";
+            if (item) item.status = "Pending";
         }
+
+        console.table(taskHistory);
     };
 }
 
-// 2. FUNGSI DELETE ALL
+// ==========================
+// DELETE ALL
+// ==========================
 deleteBtn.addEventListener('click', () => {
     if (taskList.children.length === 0) {
-        alert("Daftar sudah kosong!");
+        alert("Daftar sudah kosong");
         return;
     }
+
     if (confirm("Hapus semua tugas?")) {
         taskList.innerHTML = "";
+        taskHistory = [];
+        console.clear();
     }
 });
 
-// 3. FUNGSI FILTER (Siklus: Tampilkan Semua -> Pending -> Completed)
+// ==========================
+// FILTER DATA
+// ==========================
 let currentFilter = "all";
+
 filterBtn.addEventListener('click', () => {
     const rows = document.querySelectorAll('.task-row');
-    
-    // Ganti status filter
+
     if (currentFilter === "all") currentFilter = "pending";
     else if (currentFilter === "pending") currentFilter = "completed";
     else currentFilter = "all";
@@ -82,18 +123,17 @@ filterBtn.addEventListener('click', () => {
 
     rows.forEach(row => {
         const status = row.querySelector('.col-status').innerText.toLowerCase();
-        if (currentFilter === "all") {
-            row.style.display = "flex";
-        } else if (status === currentFilter) {
-            row.style.display = "flex";
-        } else {
-            row.style.display = "none";
-        }
+        row.style.display =
+            currentFilter === "all" || status === currentFilter
+                ? "flex"
+                : "none";
     });
 });
 
-// 4. EVENT LISTENER UTAMA
+// ==========================
+// EVENT
+// ==========================
 addBtn.addEventListener('click', addTask);
-inputTask.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') addTask();
+inputTask.addEventListener('keypress', e => {
+    if (e.key === "Enter") addTask();
 });
