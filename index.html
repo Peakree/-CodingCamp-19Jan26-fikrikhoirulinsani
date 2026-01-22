@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-card">
+  <h1 class="todo-title">Todo List</h1>
+
+  <div class="input-row">
+    <input type="text" placeholder="Add a todo..." class="input-text">
+    <input type="date" class="input-date">
+    <button class="add-btn">+</button>
+  </div>
+
+  <div class="action-row">
+    <button class="filter-btn">FILTER</button>
+    <button class="delete-btn">DELETE ALL</button>
+  </div>
+
+  <div class="table-header">
+    <span>TASK</span>
+    <span>DUE DATE</span>
+    <span>STATUS</span>
+    <span>ACTIONS</span>
+  </div>
+  <div id="task-list-container"></div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
